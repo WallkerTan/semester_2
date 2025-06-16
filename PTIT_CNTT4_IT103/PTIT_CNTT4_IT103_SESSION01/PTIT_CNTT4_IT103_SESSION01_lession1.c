@@ -9,6 +9,6 @@ int main()
     {
         printf("hello\n");
     }
-    //O[n]
+    // O[n]
     return 0;
 }
