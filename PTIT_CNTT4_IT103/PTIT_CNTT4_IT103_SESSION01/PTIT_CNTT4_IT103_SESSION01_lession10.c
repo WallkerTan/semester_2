@@ -7,15 +7,15 @@ void swap(char *a, char *b)
     *a = *b;
     *b = temp;
 }
-
+int found = 0;
 int permutation(char *b, char *a, int start, int end)
 {
     if (start == end)
     {
-        if (strcmp(b, a) == 0)
+        if (strcmp(b,a) == 0)
         {
-            printf("true\n");
-            return 0;
+            found = 1;
+            return;
         }
     }
     else
@@ -42,10 +42,18 @@ int main()
     int n2 = strlen(s2);
     if (n1 != n2)
     {
-        printf("false\n");
+        found = 0;
         return 0;
     }
     permutation(s1, s2, 0, n2 - 1);
-    printf("false\n");
+
+    if (found)
+    {
+        printf("true");
+    }
+    else
+    {
+        printf("false");
+    }
     return 0;
 }
