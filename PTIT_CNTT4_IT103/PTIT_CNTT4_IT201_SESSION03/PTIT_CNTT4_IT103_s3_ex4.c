@@ -27,8 +27,8 @@ int main()
         arr[i] = (int *)malloc(m * sizeof(int));
     }
 
-    int max = arr[0][0];
-    int min = arr[0][0];
+    int max = 0;
+    int min = 999;
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
@@ -39,6 +39,14 @@ int main()
             if (arr[i][j] < min)
                 min = arr[i][j];
         }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n");
     }
     printf("max: %d\n", max);
     printf("min: %d\n", min);

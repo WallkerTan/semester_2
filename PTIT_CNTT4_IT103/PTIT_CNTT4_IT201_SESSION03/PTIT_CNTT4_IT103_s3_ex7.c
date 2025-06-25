@@ -30,6 +30,7 @@ int main()
         }
     }
     int k;
+    scanf("%d",&k);
     if (k > n || k < 0)
     {
         printf("so hang khong hop le\n");
