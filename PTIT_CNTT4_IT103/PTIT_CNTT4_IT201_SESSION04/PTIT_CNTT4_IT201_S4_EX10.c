@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 
 struct sv
@@ -14,7 +15,7 @@ void toLowerCase(char str[])
 {
     for (int i = 0; str[i] != '\0'; i++)
     {
-        str[i] = tolower(str[i]);
+        str[i] = tolower((unsigned char)str[i]);
     }
 }
 
@@ -24,6 +25,7 @@ int main()
     scanf("%d", &n);
     getchar();
     struct sv a[n];
+
     for (int i = 0; i < n; i++)
     {
         a[i].id = i;
@@ -34,22 +36,25 @@ int main()
         scanf("%d", &a[i].age);
         getchar();
     }
+
     for (int i = 0; i < n; i++)
     {
         printf("ID: %d, Ten: %s, Tuoi: %d\n", a[i].id, a[i].name, a[i].age);
     }
+
     char k[50];
     printf("ten muon tim: ");
     fgets(k, sizeof(k), stdin);
     k[strcspn(k, "\n")] = '\0';
     toLowerCase(k);
+
     for (int i = 0; i < n; i++)
     {
-
         char te[20];
         strcpy(te, a[i].name);
         toLowerCase(te);
-        if (strcmp(te, k))
+
+        if (strcmp(te, k) == 0)
         {
             printf("ID: %d, Ten: %s, Tuoi: %d\n", a[i].id, a[i].name, a[i].age);
             return 0;
