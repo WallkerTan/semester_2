@@ -2,16 +2,16 @@
 
 void fibolasi(int n, int begin, int end, int count)
 {
-
     if (count < n)
     {
-        fibolasi(n, end, end + begin, count + 1);
+        fibolasi(n, end, begin + end, count + 1);
+        return;
     }
 
     if (end >= 0)
     {
-        printf("%d", end);
-        fibolasi(n, end - begin, begin, count);
+        printf("%d ", end);
+        fibolasi(n, end - begin, begin, count - 1);
     }
 }
 
