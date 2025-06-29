@@ -29,6 +29,7 @@ int main()
     if (!isNumber(str))
     {
         printf("khong hop le\n");
+        return;
     }
     int t = num(str, strlen(str) - 1);
     printf("%d", t);
