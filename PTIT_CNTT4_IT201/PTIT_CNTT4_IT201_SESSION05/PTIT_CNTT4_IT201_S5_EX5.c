@@ -17,7 +17,6 @@ int main()
     char str[50];
     fgets(str, sizeof(str), stdin);
     str[strcspn(str, "\n")] = '\0';
-
     if (yet(0, strlen(str) - 1, str))
     {
         printf("yet\n");
