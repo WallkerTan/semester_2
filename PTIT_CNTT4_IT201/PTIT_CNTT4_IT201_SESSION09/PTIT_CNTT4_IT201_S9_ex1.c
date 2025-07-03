@@ -1,64 +1,42 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-// 1. Khởi tạo cấu trúc cho 1 phần tử trong danh sách liên kết đơn
-struct Node
+typedef struct Node
 {
-    int data;          // Dữ liệu kiểu số nguyên
-    struct Node *next; // Con trỏ đến phần tử tiếp theo
-};
+    int data;
+    Node *next;
+} Node;
 
-// 2. Hàm tạo node mới
-struct Node *createNode(int value)
+Node *creatNode(int data)
 {
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-    if (newNode == NULL)
-    {
-        printf("Lỗi cấp phát bộ nhớ!\n");
-        exit(1);
-    }
-    newNode->data = value;
-    newNode->next = NULL;
-    return newNode;
+    Node *node = (Node *)malloc(sizeof(Node));
+    node->data = data;
+    node->next = NULL;
+    return node;
 }
 
-// Hàm in toàn bộ danh sách
-void printList(struct Node *head)
+Node *appendNode(Node *last, int datta)
 {
-    struct Node *current = head;
-    while (current != NULL)
+    Node *node = creatNode(datta);
+    last->next = node;
+    last = node;
+    return node;
+}
+
+void printNodeList(Node *head)
+{
+    Node *curent = head;
+    while (curent != NULL)
     {
-        printf("%d -> ", current->data);
-        current = current->next;
+        printf("%d ", curent->data);
+        curent = curent->next;
     }
-    printf("NULL\n");
+    printf("\n");
 }
 
 int main()
 {
-    struct Node *head = NULL;
-    struct Node *tail = NULL;
-
-    // 3. Tạo danh sách liên kết đơn với 5 phần tử bất kỳ
-    int values[5] = {12, 7, 34, 21, 9};
-
-    for (int i = 0; i < 5; i++)
-    {
-        struct Node *newNode = createNode(values[i]);
-        if (head == NULL)
-        {
-            head = tail = newNode;
-        }
-        else
-        {
-            tail->next = newNode;
-            tail = newNode;
-        }
-    }
-
-    // In danh sách
-    printf("Danh sách liên kết đơn gồm 5 phần tử:\n");
-    printList(head);
+    Node *head = creatNode(10);
+    Node *last = head;
 
     return 0;
 }
