@@ -289,6 +289,7 @@ int main()
             break;
 
         default:
+            return 0;
             break;
         }
     }
