@@ -1,156 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
 #include <ctype.h>
+#include <string.h>
+#include <stdbool.h>
 
-typedef struct stack
+typedef struct Stack
 {
-    int max;
+    int MAXsize;
     int top;
-    char A[];
-} stack;
+    char *A[];
+} Stack;
 
-stack *creatStack(int max)
+Stack *creatStack(int MAXsize)
 {
-    stack *newStack = (stack *)malloc(max * sizeof(char) + sizeof(stack));
-    if (!newStack)
+    Stack *newstack = (Stack *)malloc(MAXsize * sizeof(char) + sizeof(char));
+    if (!newstack)
     {
-        printf("cấp phát thất bại.\n");
+        printf("cap phat that bai.\n");
         return NULL;
     }
-    newStack->max = max;
-    newStack->top = -1;
-    return newStack;
+
+    newstack->MAXsize = MAXsize;
+    newstack->top = -1;
+    return newstack;
 }
 
-bool empty(stack *st)
+bool empty(Stack *st)
 {
     return st->top == -1;
 }
 
-bool full(stack *st)
+bool isFull(Stack *st)
 {
-    return st->top == st->max - 1;
+    return st->top = st->MAXsize - 1;
 }
 
-void push(stack *st, char x)
+void push(Stack *st, char str[])
 {
-    if (full(st))
+    if (isFull(st))
     {
-        printf("stack_Full.\n");
+        printf("st_Full.\n");
         return;
     }
     st->top += 1;
-    st->A[st->top] = x;
+    st->A[st->top] = str;
 }
 
-char pop(stack *st)
-{
-    if (empty(st))
-    {
-        return -1;
-    }
-    char t = st->A[st->top];
-    st->top -= 1;
-    return t;
-}
+char pop()
 
-void deleSpace(char *str)
+    int main()
 {
-    int i = 0, j = 0;
-    while (str[i])
-    {
-        if (str[i] != ' ')
-        {
-            str[j++] = str[i];
-        }
-        i++;
-    }
-    str[j] = '\0';
-}
 
-int getleng(char str[])
-{
-    int i = 0, cnt = 0;
-    while (str[i] != '\0')
-    {
-        cnt++;
-        i++;
-    }
-    return cnt;
-}
-
-bool check(char str)
-{
-    return (str == '(' || str == '{' || str == '[');
-}
-
-bool check2(char a, char b)
-{
-    return (a == '(' && b == ')') || (a == '{' && b == '}') || (a == '[' && b == ']');
-}
-bool isNumber(char c)
-{
-    return isdigit(c);
-}
-
-int main()
-{
-    char a, b, c, s[50];
-    char str[50];
-    fgets(str, sizeof(str), stdin);
-    str[strcspn(str, "\n")] = '\0';
-    deleSpace(str);
-    int n = getleng(str);
-    stack *num = creatStack(20);
-    stack *bracket = creatStack(20);
-    stack *opt = creatStack(20);
-    stack *all = creatStack(100);
-    int i = 0;
-    while (str[i] != '\0')
-    {
-        if (check(str[i]))
-        {
-            push(bracket, str[i]);
-            i++;
-            continue;
-        }
-        if (isNumber(str[i]))
-        {
-            push(num, str[i]);
-            i++;
-            continue;
-        }
-        if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
-        {
-            push(opt, str[i]);
-            i++;
-            continue;
-        }
-        if (empty(bracket) || !check2(bracket->A[bracket->top], str[i]))
-        {
-            printf("lỗi biểu thức.\n");
-            return 0;
-        }
-        push(num, pop(opt));
-        pop(bracket);
-        i++;
-    }
-    push(num, pop(opt));
-    stack *temp = creatStack(50);
-    while (!empty(num))
-    {
-        push(temp, pop(num));
-    }
-    while (!empty(temp))
-    {
-        printf("%c", pop(temp));
-        /* code */
-    }
-    free(temp);
-    free(num);
-    free(bracket);
-    free(opt);
     return 0;
 }
