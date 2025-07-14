@@ -72,16 +72,19 @@ int main()
             printf("nhập giá trị thêm: ");
             scanf("%d", &pu);
             push(number, pu);
+            printf("\n");
             break;
         case 2:
             po = pop(number);
             printf("%d", po);
+            printf("\n");
             break;
         case 3:
             while (!empty(number))
             {
                 printf("%d ", pop(number));
             }
+            printf("\n");
             break;
         case 4:
             return 0;
