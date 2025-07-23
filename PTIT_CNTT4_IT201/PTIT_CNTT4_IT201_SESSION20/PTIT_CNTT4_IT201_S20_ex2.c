@@ -224,9 +224,11 @@ void Inorder(Tnode *root)
 {
     if (root != NULL)
     {
-        Inorder(root->left);
+        if (root->left != NULL)
+            Inorder(root->left);
         printf("%d ", root->value);
-        Inorder(root->right);
+        if (root->right != NULL)
+            Inorder(root->right);
     }
 }
 
@@ -236,8 +238,10 @@ void Preorder(Tnode *root)
     if (root != NULL)
     {
         printf("%d ", root->value);
-        Preorder(root->left);
-        Preorder(root->right);
+        if (root->left != NULL)
+            Preorder(root->left);
+        if (root->right != NULL)
+            Preorder(root->right);
     }
 }
 // trái - phải - gốc
@@ -245,8 +249,10 @@ void Postorder(Tnode *root)
 {
     if (root != NULL)
     {
-        Postorder(root->left);
-        Postorder(root->right);
+        if (root->left != NULL)
+            Postorder(root->left);
+        if (root->right != NULL)
+            Postorder(root->right);
         printf("%d ", root->value);
     }
 }
@@ -302,13 +308,15 @@ void search(Tnode *root, int value)
         printf("true.\n");
         return;
     }
-    if (value < root->value)
+    if (value < root->value && root->left != NULL)
     {
         search(root->left, value);
+        return;
     }
-    else
+    else if (value > root->right && root->right != NULL)
     {
         search(root->right, value);
+        return;
     }
 }
 
@@ -339,25 +347,30 @@ void BFS(Tnode *root, int value)
 }
 
 // tìm phần tử cuối cùng của gốc
-Tnode *end(Tnode *root)
+Tnode *end(Tnode *root, Tnode *parent)
 {
     if (root == NULL)
-    {
         return NULL;
-    }
 
     if (root->right != NULL)
     {
-        return end(root->right);
+        return end(root->right, root);
     }
     else if (root->left != NULL)
     {
-        return end(root->left);
+        return end(root->left, root);
     }
-    else
+    if (parent != NULL)
     {
-        return root;
+        if (parent->right == root)
+            parent->right = NULL;
+        else if (parent->left == root)
+            parent->left = NULL;
     }
+
+    Tnode *newnode = creatNode(root->value);
+    free(root);
+    return newnode;
 }
 
 void delelement(Tnode *root, int value)
@@ -366,6 +379,10 @@ void delelement(Tnode *root, int value)
     {
         return;
     }
+    if (root->left == NULL && root->right == NULL)
+    {
+        root = NULL;
+    }
     queue *q = creatQueue();
     pushQueue(q, root);
     while (!empty(q))
@@ -373,7 +390,7 @@ void delelement(Tnode *root, int value)
         Tnode *temp = popQueue(q);
         if (temp->value == value)
         {
-            Tnode *test = end(temp);
+            Tnode *test = end(temp, NULL);
             temp->value = test->value;
             free(test);
             free(q);
